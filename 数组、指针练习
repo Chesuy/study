@@ -1,0 +1,216 @@
+#define _CRT_SECURE_NO_WARNINGS 1
+
+
+#include<stdio.h>
+#include<string.h>
+
+
+
+//数组名是首元素地址
+//sizeof（数组名）-数组名表示整个数组
+//&数组名-数组名表示整个数组
+
+//一维数组
+//int main()
+//{
+//	int a[] = { 1,2,3,4 };
+//	printf("%d\n", sizeof(a));      //sizeof(数组名)计算的是数组总大小，单位是字节--16
+//	printf("%d\n", sizeof(a+0));    //数组名表示首元素地址，a+0还是首元素地址，地址的大小就是4/8个字节
+//	printf("%d\n", sizeof(*a));     //数组名表示首元素地址，*a就是首元素，sizeof(*a)就是4
+//	printf("%d\n", sizeof(a+1));    //数组名表示首元素地址，a+1就是第二个元素的地址，地址的大小就是4/8个字节
+//	printf("%d\n", sizeof(a[1]));   //第二个元素的大小4个字节
+//	printf("%d\n", sizeof(&a));     //&a取出的是数组的地址，数组的地址也是地址，地址的大小就是4/8个字节
+//	printf("%d\n", sizeof(*&a));    //&a数组的地址，数组的地址解引用访问的整个数组，sizeof计算的就是数组的大小16个字节
+//	printf("%d\n", sizeof(&a+1));   //&a是数组的地址，&a+1虽然地址跳过整个数组，但还是地址，地址的大小就是4/8个字节
+//	printf("%d\n", sizeof(&a[0]));  //&a[0]是第一个元素的地址，地址的大小就是4/8个字节
+//	printf("%d\n", sizeof(&a[0]+1));//&a[0]+1是第二个元素的地址，地址的大小就是4/8个字节
+//	return 0;
+//}
+
+//字符数组
+//int main()
+//{
+//	char arr[] = { 'a','b','c','d','e','f' };
+//	printf("%d\n", sizeof(arr));       //sizeof（数组名）计算的是数组的大小，6个字节
+//	printf("%d\n", sizeof(arr+0));     //arr是首元素的地址，arr+0还是首元素的地址，地址的大小就是4/8个字节
+//	printf("%d\n", sizeof(*arr));      //arr是首元素的地址，*arr就是首元素，首元素大小是1个字节
+//	printf("%d\n", sizeof(arr[1]));    //arr[1]是第二个元素，大小是1个字节
+//	printf("%d\n", sizeof(&arr));      //&arr虽然是数组的地址，但还是地址，地址的大小就是4/8个字节
+//	printf("%d\n", sizeof(&arr+1));    //&arr+1是跳过整个数组后的地址，地址的大小就是4/8个字节
+//	printf("%d\n", sizeof(&arr[0]+1)); //第二个元素的地址，地址的大小就是4/8个字节
+//
+//	printf("%d\n", strlen(arr));       //随机值
+//	printf("%d\n", strlen(arr+0));     //随机值
+//	//printf("%d\n", strlen(*arr));    //err
+//	//printf("%d\n", strlen(arr[1]));  //err
+//	printf("%d\n", strlen(&arr));      //随机值
+//	printf("%d\n", strlen(&arr+1));    //随机值-6
+//	printf("%d\n", strlen(&arr[0]+1)); //随机值-1
+//
+//	return 0;
+//}
+
+//int main()
+//{
+//	char arr[] ="abcdef";
+//	printf("%d\n", sizeof(arr));       //sizeof（数组名）计算的是数组的大小，7个字节(后面还有\0)
+//	printf("%d\n", sizeof(arr + 0));   //arr是首元素的地址，arr+0还是首元素的地址，地址的大小就是4/8个字节
+//	printf("%d\n", sizeof(*arr));      //arr是首元素的地址，*arr就是首元素，首元素大小是1个字节
+//	printf("%d\n", sizeof(arr[1]));    //arr[1]是第二个元素，大小是1个字节
+//	printf("%d\n", sizeof(&arr));      //&arr虽然是数组的地址，但还是地址，地址的大小就是4/8个字节
+//	printf("%d\n", sizeof(&arr + 1));    //&arr+1是跳过整个数组后的地址，地址的大小就是4/8个字节
+//	printf("%d\n", sizeof(&arr[0] + 1)); //第二个元素的地址，地址的大小就是4/8个字节
+//
+//	printf("%d\n", strlen(arr));         //6
+//	printf("%d\n", strlen(arr + 0));     //6
+//	//printf("%d\n", strlen(*arr));      //err
+//	//printf("%d\n", strlen(arr[1]));    //err
+//	printf("%d\n", strlen(&arr));        //6 &arr-数组的地址-数组指针
+//	printf("%d\n", strlen(&arr + 1));    //随机值
+//	printf("%d\n", strlen(&arr[0] + 1)); //5
+//
+//	return 0;
+//}
+
+//int main()
+//{
+//	char* p = "abcdef";
+//	printf("%d\n", sizeof(p));      //计算指针变量p的大小，4/8个字节
+//	printf("%d\n", sizeof(p+1));    //p+1得到的是字符b的地址，4/8个字节
+//	printf("%d\n", sizeof(*p));     //*p就是字符串的第一个字符a，1个字节
+//	printf("%d\n", sizeof(p[0]));   //p[0]==*（p+0）==a 1个字节
+//	printf("%d\n", sizeof(&p));     //&p是地址，4/8个字节
+//	printf("%d\n", sizeof(&p+1));   //&p+1是地址，4/8个字节
+//	printf("%d\n", sizeof(&p[0]+1));//是地址，4/8个字节
+//
+//	printf("%d\n", strlen(p));      //6
+//	printf("%d\n", strlen(p+1));    //5
+//	//printf("%d\n", strlen(*p));   //err
+//	//printf("%d\n", strlen(p[0])); //err
+//	printf("%d\n", strlen(&p));     //随机
+//	printf("%d\n", strlen(&p+1));   //随机
+//	printf("%d\n", strlen(&p[0]+1));//5
+//
+//	return 0;
+//}
+
+
+//二维数组
+//int main()
+//{
+//	int a[3][4] = { 0 };
+//
+//	printf("%p\n", &a[0][0]);   //第一行第一个元素地址
+//	printf("%p\n", a[0]+1);     //第一行第二个元素地址
+//	printf("%p\n", a+1);        //第二行地址
+//	printf("%p\n", &a[0]+1);    //第二行地址
+//
+//	printf("%d\n", sizeof(a));         //整个数组的大小，48个字节
+//	printf("%d\n", sizeof(a[0][0]));   //第一个元素的大小，4个字节
+//	printf("%d\n", sizeof(a[0]));      //a[0]相当于第一行作为一维数组的数组名，计算的是第一行的大小，16个字节
+//	printf("%d\n", sizeof(a[0]+1));    //a[0]是第一行的数组名，数组名此时是首元素的地址，a[0]其实就是第一行第一个元素的地址
+//	                                   //所以a[0]+1就是第一行第二个元素的地址，地址的大小是4/8个字节
+//	printf("%d\n", sizeof(*(a[0]+1))); //a[0]+1就是第一行第二个元素的地址，*（a[0]+1）就是第一行第二个元素，4个字节
+//	printf("%d\n", sizeof(a+1));       //没有sizeof(a)也没有&a，所以a是首元素的地址，而吧二维数组看成一维数组时，二维数组的
+//	                                   //首元素是他的第一行，a就是第一行的地址，a+1就是第二行的地址，地址的大小是4/8个字节
+//	printf("%d\n", sizeof(*(a+1)));    //==sizeof(a[1])-计算的是第二行的大小，16个字节
+//	printf("%d\n", sizeof(&a[0]+1));   //&a[0]是第一行的地址，&a[0]+1就是第二行的地址，地址的大小是4/8个字节
+//	printf("%d\n", sizeof(*(&a[0]+1)));//第二行的大小，16个字节
+//	printf("%d\n", sizeof(*a));        //这里a是首元素地址-第一行的地址，*a就是第一行，16个字节
+//	printf("%d\n", sizeof(a[3]));      //第三行的大小，16个字节
+//
+//	return 0;
+//}
+
+
+//指针
+//int main()
+//{
+//	int a[5] = { 1,2,3,4,5 };
+//	int* p = (int*)(&a + 1);   //==a数组后面的地址
+//	printf("%d,%d\n", *(a + 1), *(p - 1)); //a是首元素地址，a+1就是第二个元素地址，*（a+1)就是第二个元素 
+//	                                       //p是数组后面的地址，p-1就是数组最后一个元素的地址，*（p-1）就是数组最后一个元素
+//	return 0;
+//}
+
+
+//struct Test
+//{
+//	int Num;
+//	char* pcName;
+//	short sDate;
+//	char cha[2];
+//	short sBa[4];
+//}*p;//结构体指针变量
+////假设p的值为0x100000,如下表表达式的值分别是多少
+////已知结构体Test类型的变量大小是20个字节
+//int main()
+//{
+//	p = (struct Test*)0x100000;
+//	printf("%p\n", p + 0x1);                //0x00100014
+//	printf("%p\n", (unsigned long)p+0x1);   //p强制装换成unsigned long变成了整数，整数+1就是+1，0x00100001
+//	printf("%p\n", (unsigned int*)p + 0x1); //p强制转换成unsigned int*变成整形指针，+1就是+4个字节，0x00100004
+//	return 0;
+//}
+
+
+//int main()
+//{
+//	int a[4] = { 1,2,3,4 };  //低地址 01 00 00 00,02 00 00 00,03 00 00 00,04 00 00 00 高地址
+//	int* p1 = (int*)(&a + 1);//a是首元素地址+1跳过整个数组
+//	int* p2 = (int*)((int)a + 1);//a是首元素1的地址强制转换成整数，整数加1再转换成地址就是向后偏移了一个字节,p2==00 00 00 02
+//	printf("%x,%x", p1[-1], *p2);  //p1[-1]==*(p-1)==4, p2==02000000
+//	return 0;
+//}
+
+
+//int main()
+//{
+//	int a[3][2] = { (0,1),(2,3),(4,5) };//逗号表达式结果是最后一个表达式结果 数组a==1，3/  5,0/  0，0
+//	int* p;
+//	p = a[0];//a[0]--数组名--表示首元素地址
+//	printf("%d", p[0]);
+//	return 0;
+//}
+
+
+//int main()
+//{
+//	int a[5][5];//a是五行五列的数组，25个元素
+//	int(*p)[4];//p是4列
+//	p = a;//p是4行4列的数组       &p[4][2]是第19个元素的地址  &a[4][2]是第23个元素的地址 
+//	printf("%p,%d\n", &p[4][2] - &a[4][2], &p[4][2] - &a[4][2]);//%p打印地址，打印的是-4的补码
+//
+//}
+
+//int main()
+//{
+//	int a[2][5] = { 1,2,3,4,5,6,7,8,9,10 };
+//	int* p1 = (int*)(&a + 1);//&a+1是a数组后面的地址的数组指针，强制类型转换成int*
+//	int* p2 = (int*)(*(a + 1));//a是数组首元素（第一行）的地址,+1就是第二行的地址，*解引用访问的就是第二行的元素
+//	printf("%d,%d\n", *(p1 - 1), *(p2 - 1));// 10  5
+//	return 0;
+//}
+
+
+//int main()
+//{
+//	char* a[] = { "work","ar","alibaba" };
+//	char** pa = a;//*pa表示pa是指针，类型是char*，指向a首元素
+//	pa++;//跳过一个char*,指向了a的第二个元素
+//	printf("%s\n", *pa);//at
+//	return 0;
+//}
+
+
+//int main()
+//{
+//	char* c[] = { "enter","new","point","first" };
+//	char** cp[] = { c + 3,c + 2,c + 1,c };
+//	char*** cpp = cp;
+//	printf("%s\n", **++cpp);//point  ++cpp解引用就是cp第二个元素c+2的地址,再解引用就是point的地址
+//	printf("%s\n", *-- * ++cpp + 3);//er 再++cpp解引用就是cp第三个元素c+1的地址，再--就变成了c的地址,再解引用就拿到了enter的地址，再加3就是er的地址
+//	printf("%s\n", *cpp[-2] + 3);//st cpp[-2]就是拿到了c+3的地址解引用就是C+3,再解引用就是拿到了first的地址，再+3就是st的地址
+//	printf("%s\n", cpp[-1][-1] + 1);//ew cpp[-1]就是拿到了cp第二个元素c+2的地址解引用就是c+2,cpp[-1][-1]就是c+2再-1就是c+1的地址解引用，就拿到了new的地址，再+1就是ew的地址
+//	return 0;
+//}
